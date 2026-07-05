@@ -1,0 +1,53 @@
+from langchain_community.vectorstores import FAISS
+
+from embeddings import EmbeddingModel
+from config import FAISS_INDEX_PATH
+from config import TOP_K
+
+from models.retrieval_result import RetrievalResult
+
+
+class FAISSRetriever:
+
+    def __init__(self):
+
+        embedding_model = EmbeddingModel().get()
+
+        self.db = FAISS.load_local(
+            FAISS_INDEX_PATH,
+            embedding_model,
+            allow_dangerous_deserialization=True,
+        )
+
+    def search(self, question):
+
+        results = self.db.similarity_search_with_score(
+            question,
+            k=TOP_K
+        )
+
+        retrieval_results = []
+
+        for doc, score in results:
+
+            retrieval_results.append(
+
+                RetrievalResult(
+
+                    page_content=doc.page_content,
+
+                    source=doc.metadata.get(
+                        "source",
+                        "Unknown"
+                    ),
+
+                    page=doc.metadata.get(
+                        "page",
+                        -1
+                    ),
+
+                    score=score
+                )
+            )
+
+        return retrieval_results

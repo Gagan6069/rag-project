@@ -1,22 +1,19 @@
 RAG_PROMPT = """
 You are an AI assistant.
 
-Answer ONLY using the provided context.
+You MUST answer using ONLY the information present in the provided context.
 
-Instructions:
-
-- Do not invent information.
-- If the answer is unavailable, reply:
-  "I don't know based on the provided documents."
-- Be concise.
-- Mention page numbers if they are available.
+Rules:
+1. If the answer is present in the context, provide a clear and complete answer.
+2. Do NOT add information outside the context.
+3. If the answer is NOT present anywhere in the context, reply ONLY with:
+   I don't know based on the provided documents.
+4. Never combine an answer with "I don't know."
 
 Context:
-
 {context}
 
 Question:
-
 {question}
 
 Answer:

@@ -1,67 +1,59 @@
-from retrieve import Retriever
-from llm import LocalLLM
-from prompts import RAG_PROMPT
-from context_builder import ContextBuilder
-from builders.prompt_builder import PromptBuilder
+from services.rag_service import RAGService
 
 
-class RAG:
+# def print_sources(results):
 
-    def __init__(self):
+#     print("\n" + "=" * 60)
+#     print("SOURCES")
+#     print("=" * 60)
 
-        self.retriever = Retriever()
-        self.llm = LocalLLM()
+#     if not results:
+#         print("No relevant sources found.")
+#         return
 
-    def ask(self, question):
+#     for index, result in enumerate(results, start=1):
 
-        results = self.retriever.search(question)
-
-        context = ContextBuilder.build(results)
-
-        prompt = PromptBuilder.build(
-            context,
-            question
-        )
-
-        answer = self.llm.ask(prompt)
-
-        return {
-            "question": question,
-            "answer": answer,
-            "sources": results,
-        }
+#         print(f"\nSource #{index}")
+#         print(f"File  : {result.source}")
+#         print(f"Page  : {result.page}")
+#         print(f"Score : {result.score:.4f}")
+#         print("-" * 60)
 
 
-if __name__ == "__main__":
+def main():
 
-    rag = RAG()
+    rag = RAGService()
+
+    print("=" * 60)
+    print("        AI Knowledge Assistant")
+    print("=" * 60)
+    print("Type 'exit' to quit.\n")
 
     while True:
 
-        question = input("\nAsk: ")
+        question = input("Ask: ").strip()
 
         if question.lower() == "exit":
+            print("\nGoodbye!")
             break
+
+        if not question:
+            continue
 
         response = rag.ask(question)
 
         print("\n" + "=" * 60)
         print("QUESTION")
         print("=" * 60)
-        print(response["question"])
+        print(response.question)
 
         print("\n" + "=" * 60)
         print("ANSWER")
         print("=" * 60)
-        print(response["answer"])
+        print(response.answer)
 
-        print("\n" + "=" * 60)
-        print("SOURCES")
-        print("=" * 60)
+        # print_sources(response.sources)
 
-        for doc, score in response["sources"]:
 
-            print(f"Page      : {doc.metadata.get('page')}")
-            print(f"Source    : {doc.metadata.get('source')}")
-            print(f"Score     : {score:.4f}")
-            print("-" * 40)
+if __name__ == "__main__":
+    main()

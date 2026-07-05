@@ -4,10 +4,12 @@ class ScoreFilter:
     def filter(results, threshold):
 
         filtered = []
+        
+        for result in results:
 
-        for doc, score in results:
-
-            if score <= threshold:
-                filtered.append((doc, score))
+            # if result.score <= threshold:
+                filtered.append(result)
+                
+                filtered.append(result)    
 
         return filtered

@@ -17,3 +17,5 @@ SIMILARITY_THRESHOLD = 0.80
 # Paths
 FAISS_INDEX_PATH = "faiss_index"
 PDF_PATH = "../data/employee_handbook.pdf"
+
+DEBUG = True

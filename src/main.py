@@ -1,45 +1,16 @@
 from services.rag_service import RAGService
+from debug.rag_dashboard import RAGDashboard
 
 
-def print_sources(sources):
+rag = RAGService()
 
-    print("\n" + "=" * 60)
-    print("SOURCES")
-    print("=" * 60)
+while True:
 
-    for doc, score in sources:
+    question = input("\nAsk: ")
 
-        print(f"Page      : {doc.metadata.get('page')}")
-        print(f"Source    : {doc.metadata.get('source')}")
-        print(f"Score     : {score:.4f}")
+    if question.lower() == "exit":
+        break
 
-        print("-" * 60)
+    RAGDashboard.question(question)
 
-
-def main():
-
-    rag = RAGService()
-
-    print("\nRAG Chat Started")
-    print("Type 'exit' to quit.\n")
-
-    while True:
-
-        question = input("Ask: ")
-
-        if question.lower() == "exit":
-            break
-
-        response = rag.ask(question)
-
-        print("\n" + "=" * 60)
-        print("ANSWER")
-        print("=" * 60)
-
-        print(response["answer"])
-
-        print_sources(response["sources"])
-
-
-if __name__ == "__main__":
-    main()
+    rag.ask(question)
