@@ -1,39 +1,49 @@
 from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 
+from config import (
+    EMBEDDING_MODEL,
+    FAISS_INDEX_PATH,
+    TOP_K,
+)
+
 
 class Retriever:
 
     def __init__(self):
 
         self.embedding = HuggingFaceEmbeddings(
-            model_name="sentence-transformers/all-MiniLM-L6-v2"
+            model_name=EMBEDDING_MODEL
         )
 
         self.db = FAISS.load_local(
-            "faiss_index",
+            FAISS_INDEX_PATH,
             self.embedding,
-            allow_dangerous_deserialization=True
+            allow_dangerous_deserialization=True,
         )
 
-    def search(self, question, k=3):
+    def search(self, question):
 
-        docs = self.db.similarity_search(
+        results = self.db.similarity_search_with_score(
             question,
-            k=k
+            k=TOP_K,
         )
 
-        return docs
+        return results
 
 
 if __name__ == "__main__":
 
     retriever = Retriever()
 
-    docs = retriever.search(
-        "How many paid leaves are allowed?"
+    results = retriever.search(
+        "How many casual leaves are allowed?"
     )
 
-    for i, doc in enumerate(docs, start=1):
-        print(f"\n----- Document {i} -----\n")
-        print(doc.page_content)
+    for doc, score in results:
+
+        print("=" * 50)
+        print(f"Similarity Score : {score}")
+        print(f"Page             : {doc.metadata.get('page')}")
+        print(f"Source           : {doc.metadata.get('source')}")
+        print(doc.page_content[:250])

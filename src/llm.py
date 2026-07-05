@@ -1,14 +1,18 @@
 from langchain_ollama import ChatOllama
 
+from config import (
+    OLLAMA_MODEL,
+    TEMPERATURE,
+)
+
 
 class LocalLLM:
 
     def __init__(self):
 
         self.llm = ChatOllama(
-            # model="gemma3:4b",
-            model = "llama3.2:3b",
-            temperature=0
+            model=OLLAMA_MODEL,
+            temperature=TEMPERATURE,
         )
 
     def ask(self, prompt):
@@ -16,12 +20,3 @@ class LocalLLM:
         response = self.llm.invoke(prompt)
 
         return response.content
-
-
-if __name__ == "__main__":
-
-    llm = LocalLLM()
-
-    answer = llm.ask("Explain Vector Database in one paragraph.")
-
-    print(answer)

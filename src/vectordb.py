@@ -1,24 +1,32 @@
 from langchain_community.vectorstores import FAISS
 from langchain_community.document_loaders import PyPDFLoader
-from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_huggingface import HuggingFaceEmbeddings
 
-loader = PyPDFLoader("../data/employee_handbook.pdf")
+from config import (
+    PDF_PATH,
+    CHUNK_SIZE,
+    CHUNK_OVERLAP,
+    EMBEDDING_MODEL,
+    FAISS_INDEX_PATH,
+)
+
+loader = PyPDFLoader(PDF_PATH)
 docs = loader.load()
 
 splitter = RecursiveCharacterTextSplitter(
-    chunk_size=500,
-    chunk_overlap=100
+    chunk_size=CHUNK_SIZE,
+    chunk_overlap=CHUNK_OVERLAP,
 )
 
 chunks = splitter.split_documents(docs)
 
 embedding = HuggingFaceEmbeddings(
-    model_name="all-MiniLM-L6-v2"
+    model_name=EMBEDDING_MODEL
 )
 
 db = FAISS.from_documents(chunks, embedding)
 
-db.save_local("faiss_index")
+db.save_local(FAISS_INDEX_PATH)
 
-print("Saved")
+print("Vector database created successfully.")

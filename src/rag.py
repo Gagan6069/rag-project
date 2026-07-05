@@ -1,5 +1,8 @@
 from retrieve import Retriever
 from llm import LocalLLM
+from prompts import RAG_PROMPT
+from context_builder import ContextBuilder
+from builders.prompt_builder import PromptBuilder
 
 
 class RAG:
@@ -11,30 +14,22 @@ class RAG:
 
     def ask(self, question):
 
-        docs = self.retriever.search(question)
+        results = self.retriever.search(question)
 
-        context = "\n\n".join(
-            [doc.page_content for doc in docs]
+        context = ContextBuilder.build(results)
+
+        prompt = PromptBuilder.build(
+            context,
+            question
         )
 
-        prompt = f"""
-You are a helpful assistant.
+        answer = self.llm.ask(prompt)
 
-Answer ONLY from the provided context.
-
-If the answer is not present,
-say "I don't know."
-
-Context:
-{context}
-
-Question:
-{question}
-
-Answer:
-"""
-
-        return self.llm.ask(prompt)
+        return {
+            "question": question,
+            "answer": answer,
+            "sources": results,
+        }
 
 
 if __name__ == "__main__":
@@ -48,6 +43,25 @@ if __name__ == "__main__":
         if question.lower() == "exit":
             break
 
-        print("\nAnswer:\n")
+        response = rag.ask(question)
 
-        print(rag.ask(question))
+        print("\n" + "=" * 60)
+        print("QUESTION")
+        print("=" * 60)
+        print(response["question"])
+
+        print("\n" + "=" * 60)
+        print("ANSWER")
+        print("=" * 60)
+        print(response["answer"])
+
+        print("\n" + "=" * 60)
+        print("SOURCES")
+        print("=" * 60)
+
+        for doc, score in response["sources"]:
+
+            print(f"Page      : {doc.metadata.get('page')}")
+            print(f"Source    : {doc.metadata.get('source')}")
+            print(f"Score     : {score:.4f}")
+            print("-" * 40)
