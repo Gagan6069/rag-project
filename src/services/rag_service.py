@@ -9,10 +9,14 @@ from models.rag_response import RAGResponse
 from llm import LocalLLM
 
 from config import SIMILARITY_THRESHOLD
+from llms.groq_llm import GroqLLM
+from llms.ollama_llm import OllamaLLM
+from config import LLM_PROVIDER
 
 from utils.logger import logger
 from debug.rag_dashboard import RAGDashboard
 
+from llms.factory import LLMFactory
 
 class RAGService:
 
@@ -20,7 +24,16 @@ class RAGService:
 
         self.retriever = FAISSRetriever()
         self.context_builder = ContextBuilder()
-        self.llm = LocalLLM()
+        # self.llm = LocalLLM()
+        # if LLM_PROVIDER == "groq":
+        #     self.llm = GroqLLM()
+
+        # elif LLM_PROVIDER == "ollama":
+        #     self.llm = OllamaLLM()
+
+        # else:
+        #     raise ValueError(f"Unknown LLM_PROVIDER: {LLM_PROVIDER}")
+        self.llm = LLMFactory.create()
 
     def ask(self, question):
 

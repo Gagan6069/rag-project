@@ -4,12 +4,15 @@ class RAGDashboard:
     
     @staticmethod
     def line():
+        if not DEBUG:
+            return
 
         print("=" * 90)
 
     @staticmethod
     def section(title):
-
+        if not DEBUG:
+            return
         print()
         RAGDashboard.line()
         print(title.upper())
@@ -17,14 +20,16 @@ class RAGDashboard:
 
     @staticmethod
     def question(question):
-
+        if not DEBUG:
+            return
         RAGDashboard.section("Question")
 
         print(question)
 
     @staticmethod
     def retrieval(results):
-
+        if not DEBUG:
+            return
         RAGDashboard.section("Retrieved Chunks")
 
         if not results:
@@ -53,6 +58,9 @@ class RAGDashboard:
     @staticmethod
     def context(context):
 
+        if not DEBUG:
+            return
+    
         RAGDashboard.section("Context Sent To LLM")
 
         print(context)
@@ -60,13 +68,17 @@ class RAGDashboard:
     @staticmethod
     def prompt(prompt):
 
+        if not DEBUG:
+            return
+
         RAGDashboard.section("Prompt")
 
         print(prompt)
 
     @staticmethod
     def answer(answer):
-
+        if not DEBUG:
+            return
         RAGDashboard.section("LLM Answer")
 
         print(answer)
