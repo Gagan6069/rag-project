@@ -18,11 +18,14 @@ from debug.rag_dashboard import RAGDashboard
 
 from llms.factory import LLMFactory
 
+from retrievers.factory import RetrieverFactory
+
 class RAGService:
 
     def __init__(self):
 
-        self.retriever = FAISSRetriever()
+        # self.retriever = FAISSRetriever()
+        self.retriever = RetrieverFactory.create()
         self.context_builder = ContextBuilder()
         # self.llm = LocalLLM()
         # if LLM_PROVIDER == "groq":

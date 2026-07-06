@@ -1,7 +1,9 @@
 # Embedding Model
 EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
+##########################################
 #LLM selection
+##########################################
 LLM_PROVIDER = "groq"   # or "ollama"
 
 # Ollama
@@ -11,6 +13,12 @@ TEMPERATURE = 0
 
 #Groq
 GROQ_MODEL = "openai/gpt-oss-20b"
+
+##########################################
+# Retriever
+##########################################
+
+RETRIEVER_TYPE = "faiss"
 
 # Chunking
 CHUNK_SIZE = 500

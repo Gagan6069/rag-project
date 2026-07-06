@@ -5,9 +5,10 @@ from config import FAISS_INDEX_PATH
 from config import TOP_K
 
 from models.retrieval_result import RetrievalResult
+from retrievers.base_retriever import BaseRetriever
 
 
-class FAISSRetriever:
+class FAISSRetriever(BaseRetriever):
 
     def __init__(self):
 
