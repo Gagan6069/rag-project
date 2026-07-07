@@ -16,7 +16,7 @@ Page:
 {result.page}
 
 Similarity Score:
-{result.score:.4f}
+{result.similarity_score:.4f}
 
 Content:
 {result.page_content}

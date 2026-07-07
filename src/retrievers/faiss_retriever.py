@@ -47,8 +47,11 @@ class FAISSRetriever(BaseRetriever):
                         -1
                     ),
 
-                    score=score
+                    similarity_score=score
                 )
             )
 
         return retrieval_results
+
+    def retrieve(self, question):
+        return self.search(question)

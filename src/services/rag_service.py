@@ -19,6 +19,10 @@ from debug.rag_dashboard import RAGDashboard
 from llms.factory import LLMFactory
 
 from retrievers.factory import RetrieverFactory
+from rerankers.cross_encoder_reranker import CrossEncoderReranker
+from config import ENABLE_RERANKER
+from config import RERANK_TOP_K
+
 
 class RAGService:
 
@@ -37,6 +41,9 @@ class RAGService:
         # else:
         #     raise ValueError(f"Unknown LLM_PROVIDER: {LLM_PROVIDER}")
         self.llm = LLMFactory.create()
+        
+        if ENABLE_RERANKER:
+            self.reranker = CrossEncoderReranker()
 
     def ask(self, question):
 
@@ -48,6 +55,16 @@ class RAGService:
         logger.info("Retrieving documents...")
 
         results = self.retriever.search(question)
+        
+        if ENABLE_RERANKER:
+
+            results = self.reranker.rerank(
+                question,
+                results
+            )
+
+
+        results = results[:RERANK_TOP_K]
 
         logger.info(f"Retrieved {len(results)} chunks")
 

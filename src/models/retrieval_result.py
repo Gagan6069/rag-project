@@ -10,4 +10,6 @@ class RetrievalResult:
 
     page: int
 
-    score: float
+    similarity_score: float
+    
+    rerank_score: float = 0.0
