@@ -15,8 +15,20 @@ Source:
 Page:
 {result.page}
 
-Similarity Score:
-{result.similarity_score:.4f}
+FAISS Score:
+{result.score:.4f}
+
+BM25 Score:
+{result.bm25_score:.4f}
+
+RRF Score:
+{result.rrf_score:.4f}
+
+Rerank Score:
+{result.rerank_score:.4f}
+
+Retrieval Method:
+{result.retrieval_method}
 
 Content:
 {result.page_content}

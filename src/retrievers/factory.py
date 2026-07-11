@@ -1,6 +1,7 @@
 from config import RETRIEVER_TYPE
 
 from retrievers.faiss_retriever import FAISSRetriever
+from retrievers.hybrid_retriever import HybridRetriever
 
 
 class RetrieverFactory:
@@ -8,11 +9,14 @@ class RetrieverFactory:
     @staticmethod
     def create():
 
-        retriever = RETRIEVER_TYPE.lower()
+        retriever_type = RETRIEVER_TYPE.lower()
 
-        if retriever == "faiss":
+        if retriever_type == "faiss":
             return FAISSRetriever()
 
+        if retriever_type == "hybrid":
+            return HybridRetriever()
+
         raise ValueError(
-            f"Unsupported retriever: {RETRIEVER_TYPE}"
+            f"Unsupported retriever type: {RETRIEVER_TYPE}"
         )

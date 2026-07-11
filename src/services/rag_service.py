@@ -54,7 +54,7 @@ class RAGService:
         # -----------------------------
         logger.info("Retrieving documents...")
 
-        results = self.retriever.search(question)
+        results = self.retriever.retrieve(question)
         
         if ENABLE_RERANKER:
 

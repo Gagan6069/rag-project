@@ -1,8 +1,7 @@
 from langchain_community.vectorstores import FAISS
 
 from embeddings import EmbeddingModel
-from config import FAISS_INDEX_PATH
-from config import TOP_K
+from config import FAISS_INDEX_PATH, TOP_K
 
 from models.retrieval_result import RetrievalResult
 from retrievers.base_retriever import BaseRetriever
@@ -20,7 +19,7 @@ class FAISSRetriever(BaseRetriever):
             allow_dangerous_deserialization=True,
         )
 
-    def search(self, question):
+    def retrieve(self, question: str):
 
         results = self.db.similarity_search_with_score(
             question,
@@ -32,26 +31,18 @@ class FAISSRetriever(BaseRetriever):
         for doc, score in results:
 
             retrieval_results.append(
-
                 RetrievalResult(
-
                     page_content=doc.page_content,
-
-                    source=doc.metadata.get(
-                        "source",
-                        "Unknown"
-                    ),
-
-                    page=doc.metadata.get(
-                        "page",
-                        -1
-                    ),
-
-                    similarity_score=score
+                    source=doc.metadata.get("source", "Unknown"),
+                    page=doc.metadata.get("page", -1),
+                    score=float(score),
+                    chunk_id=doc.metadata.get("chunk_id", -1),
+                    retrieval_method="faiss",
                 )
             )
 
         return retrieval_results
 
-    def retrieve(self, question):
-        return self.search(question)
+    # Optional backward compatibility
+    def search(self, question: str):
+        return self.retrieve(question)

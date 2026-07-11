@@ -11,39 +11,23 @@ class CrossEncoderReranker(BaseReranker):
             "cross-encoder/ms-marco-MiniLM-L-6-v2"
         )
 
-
     def rerank(self, question, results):
 
-        pairs = []
+        if not results:
+            return []
 
-        for result in results:
-
-            pairs = [
-                (question, result.page_content)
-                for result in results
-            ]
-
+        pairs = [
+            (question, result.page_content)
+            for result in results
+        ]
 
         scores = self.model.predict(pairs)
 
-
-        reranked = []
-
-
         for result, score in zip(results, scores):
+            result.rerank_score = float(score)
 
-            reranked.sort(
-                key=lambda x: x.rerank_score,
-                reverse=True
-            )
-
-            reranked.append(result)
-
-
-        reranked.sort(
+        return sorted(
+            results,
             key=lambda x: x.rerank_score,
             reverse=True
         )
-
-
-        return reranked
