@@ -5,8 +5,9 @@ from langchain_community.vectorstores import FAISS
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter   
 from langchain_huggingface import HuggingFaceEmbeddings
+from src.utils.startup_validator import StartupValidator
 
-from config import (
+from src.config import (
     PDF_PATH,
     CHUNK_SIZE,
     CHUNK_OVERLAP,
@@ -15,12 +16,14 @@ from config import (
     CHUNK_STORE_PATH,
 )
 
+StartupValidator.validate_for_indexing()
+
 
 def build_vector_db():
 
     print("Loading PDF...")
 
-    loader = PyPDFLoader(PDF_PATH)
+    loader = PyPDFLoader(str(PDF_PATH))
     docs = loader.load()
 
     print(f"Loaded pages: {len(docs)}")
@@ -44,12 +47,12 @@ def build_vector_db():
 
     db = FAISS.from_documents(chunks, embedding)
 
-    db.save_local(FAISS_INDEX_PATH)
+    db.save_local(str(FAISS_INDEX_PATH))
 
     print(f"FAISS index saved at: {FAISS_INDEX_PATH}")
 
     # Save chunks for BM25
-    os.makedirs(os.path.dirname(CHUNK_STORE_PATH), exist_ok=True)
+    # os.makedirs(os.path.dirname(CHUNK_STORE_PATH), exist_ok=True)
 
     chunk_records = []
 

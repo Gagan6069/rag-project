@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import List
 
-from models.retrieval_result import RetrievalResult
+from src.models.retrieval_result import RetrievalResult
 
 
 @dataclass
@@ -12,3 +12,7 @@ class RAGResponse:
     answer: str
 
     sources: List[RetrievalResult]
+
+    context: str = ""
+
+    prompt: str = ""

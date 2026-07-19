@@ -1,7 +1,7 @@
 import os
 from groq import Groq
-from config import GROQ_MODEL
-from llms.base import BaseLLM
+from src.config import GROQ_MODEL
+from src.llms.base import BaseLLM
 
 
 class GroqLLM(BaseLLM):

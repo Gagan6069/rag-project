@@ -1,51 +1,37 @@
-# Byte-compiled / optimized / DLL files
+# Virtual environments
+.venv/
+venv/
+
+# Secrets
+.env
+
+# Python
 __pycache__/
 *.py[cod]
+.pytest_cache/
+.mypy_cache/
 
-# C extensions
-*.so
+# IDEs
+.idea/
+.vscode/
+*.iml
 
-# Distribution / packaging
-bin/
-build/
-develop-eggs/
-dist/
-eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-*.egg-info/
-.installed.cfg
-*.egg
+# Operating system
+.DS_Store
+Thumbs.db
 
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
+# Generated model/index data
+storage/
+faiss_index/
+chunk_store/
 
-# Unit test / coverage reports
-.tox/
-.coverage
-.cache
-nosetests.xml
-coverage.xml
+# Generated evaluation output
+outputs/*.csv
 
-# Translations
-*.mo
+# Hugging Face and model cache, if created locally
+.cache/
 
-# Mr Developer
-.mr.developer.cfg
-.project
-.pydevproject
-
-# Rope
-.ropeproject
-
-# Django stuff:
+# Logs
 *.log
-*.pot
 
-# Sphinx documentation
-docs/_build/
-src/outputs/run_results.csv
+rag_project_notes.txt

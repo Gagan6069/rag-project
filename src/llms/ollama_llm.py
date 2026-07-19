@@ -1,7 +1,7 @@
 from langchain_ollama import ChatOllama
 
-from llms.base import BaseLLM
-from config import OLLAMA_MODEL
+from src.llms.base import BaseLLM
+from src.config import OLLAMA_MODEL
 
 
 class OllamaLLM(BaseLLM):

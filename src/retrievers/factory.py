@@ -1,7 +1,7 @@
-from config import RETRIEVER_TYPE
+from src.config import RETRIEVER_TYPE
 
-from retrievers.faiss_retriever import FAISSRetriever
-from retrievers.hybrid_retriever import HybridRetriever
+from src.retrievers.faiss_retriever import FAISSRetriever
+from src.retrievers.hybrid_retriever import HybridRetriever
 
 
 class RetrieverFactory:

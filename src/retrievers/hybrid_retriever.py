@@ -1,10 +1,10 @@
 from copy import deepcopy
 
-from config import HYBRID_TOP_K, RRF_K
+from src.config import HYBRID_TOP_K, RRF_K
 
-from retrievers.base_retriever import BaseRetriever
-from retrievers.faiss_retriever import FAISSRetriever
-from retrievers.bm25_retriever import BM25Retriever
+from src.retrievers.base_retriever import BaseRetriever
+from src.retrievers.faiss_retriever import FAISSRetriever
+from src.retrievers.bm25_retriever import BM25Retriever
 
 
 class HybridRetriever(BaseRetriever):

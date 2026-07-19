@@ -1,4 +1,4 @@
-from prompts import RAG_PROMPT
+from src.prompts import RAG_PROMPT
 
 
 class PromptBuilder:

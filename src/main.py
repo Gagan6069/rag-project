@@ -1,4 +1,4 @@
-from services.rag_service import RAGService
+from src.services.rag_service import RAGService
 from debug.rag_dashboard import RAGDashboard
 
 

@@ -3,9 +3,9 @@ import re
 
 from rank_bm25 import BM25Okapi
 
-from config import CHUNK_STORE_PATH, BM25_TOP_K
-from models.retrieval_result import RetrievalResult
-from retrievers.base_retriever import BaseRetriever
+from src.config import CHUNK_STORE_PATH, BM25_TOP_K
+from src.models.retrieval_result import RetrievalResult
+from src.retrievers.base_retriever import BaseRetriever
 
 
 class BM25Retriever(BaseRetriever):
@@ -22,6 +22,13 @@ class BM25Retriever(BaseRetriever):
         self.bm25 = BM25Okapi(self.tokenized_corpus)
 
     def _load_chunks(self):
+
+        if not CHUNK_STORE_PATH.exists():
+            raise FileNotFoundError(
+                "BM25 chunk store was not found at "
+                f"{CHUNK_STORE_PATH}. "
+                "Run `python -m src.vectordb` first."
+            )
 
         with open(CHUNK_STORE_PATH, "r", encoding="utf-8") as f:
             return json.load(f)

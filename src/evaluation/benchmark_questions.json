@@ -1,0 +1,42 @@
+[
+  {
+    "question": "Tell me about leave policy",
+    "expected_pages": []
+  },
+  {
+    "question": "What is the resignation notice period?",
+    "expected_pages": []
+  },
+  {
+    "question": "What are the annual leave rules?",
+    "expected_pages": []
+  },
+  {
+    "question": "Is there a dress code?",
+    "expected_pages": []
+  },
+  {
+    "question": "What is the travel reimbursement policy?",
+    "expected_pages": []
+  },
+  {
+    "question": "What are medical leave benefits?",
+    "expected_pages": []
+  },
+  {
+    "question": "What is the working hours policy?",
+    "expected_pages": []
+  },
+  {
+    "question": "What are employee benefits?",
+    "expected_pages": []
+  },
+  {
+    "question": "What is the probation policy?",
+    "expected_pages": []
+  },
+  {
+    "question": "What is the remote work policy?",
+    "expected_pages": []
+  }
+]

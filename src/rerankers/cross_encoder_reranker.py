@@ -1,6 +1,6 @@
 from sentence_transformers import CrossEncoder
 
-from rerankers.base_reranker import BaseReranker
+from src.rerankers.base_reranker import BaseReranker
 
 
 class CrossEncoderReranker(BaseReranker):

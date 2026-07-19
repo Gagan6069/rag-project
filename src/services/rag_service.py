@@ -1,27 +1,27 @@
-from builders.context_builder import ContextBuilder
-from builders.prompt_builder import PromptBuilder
+from src.builders.context_builder import ContextBuilder
+from src.builders.prompt_builder import PromptBuilder
 
-from retrievers.faiss_retriever import FAISSRetriever
-from filters.score_filter import ScoreFilter
+from src.retrievers.faiss_retriever import FAISSRetriever
+from src.filters.score_filter import ScoreFilter
 
-from models.rag_response import RAGResponse
+from src.models.rag_response import RAGResponse
 
-from llm import LocalLLM
+from src.llm import LocalLLM
 
-from config import SIMILARITY_THRESHOLD
-from llms.groq_llm import GroqLLM
-from llms.ollama_llm import OllamaLLM
-from config import LLM_PROVIDER
+from src.config import SIMILARITY_THRESHOLD
+from src.llms.groq_llm import GroqLLM
+from src.llms.ollama_llm import OllamaLLM
+from src.config import LLM_PROVIDER
 
-from utils.logger import logger
-from debug.rag_dashboard import RAGDashboard
+from src.utils.logger import logger
+from src.debug.rag_dashboard import RAGDashboard
 
-from llms.factory import LLMFactory
+from src.llms.factory import LLMFactory
 
-from retrievers.factory import RetrieverFactory
-from rerankers.cross_encoder_reranker import CrossEncoderReranker
-from config import ENABLE_RERANKER
-from config import RERANK_TOP_K
+from src.retrievers.factory import RetrieverFactory
+from src.rerankers.cross_encoder_reranker import CrossEncoderReranker
+from src.config import ENABLE_RERANKER
+from src.config import RERANK_TOP_K
 
 
 class RAGService:
@@ -86,8 +86,10 @@ class RAGService:
 
             return RAGResponse(
                 question=question,
-                answer="I couldn't find relevant information in the document.",
-                sources=[]
+                answer=answer,
+                sources=results,
+                context=context,
+                prompt=prompt
             )
 
         # -----------------------------

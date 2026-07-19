@@ -1,5 +1,5 @@
-from services.rag_service import RAGService
-
+from src.services.rag_service import RAGService
+from src.utils.startup_validator import StartupValidator
 
 # def print_sources(results):
 
@@ -21,6 +21,8 @@ from services.rag_service import RAGService
 
 
 def main():
+
+    StartupValidator.validate_for_chat()
 
     rag = RAGService()
 

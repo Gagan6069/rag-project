@@ -1,7 +1,7 @@
-from config import LLM_PROVIDER
+from src.config import LLM_PROVIDER
 
-from llms.ollama_llm import OllamaLLM
-from llms.groq_llm import GroqLLM
+from src.llms.ollama_llm import OllamaLLM
+from src.llms.groq_llm import GroqLLM
 
 
 class LLMFactory:

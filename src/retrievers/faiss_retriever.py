@@ -1,15 +1,22 @@
 from langchain_community.vectorstores import FAISS
 
-from embeddings import EmbeddingModel
-from config import FAISS_INDEX_PATH, TOP_K
+from src.embeddings import EmbeddingModel
+from src.config import FAISS_INDEX_PATH, TOP_K
 
-from models.retrieval_result import RetrievalResult
-from retrievers.base_retriever import BaseRetriever
+from src.models.retrieval_result import RetrievalResult
+from src.retrievers.base_retriever import BaseRetriever
 
 
 class FAISSRetriever(BaseRetriever):
 
     def __init__(self):
+
+        if not FAISS_INDEX_PATH.exists():
+            raise FileNotFoundError(
+                "FAISS index was not found at "
+                f"{FAISS_INDEX_PATH}. "
+                "Run `python -m src.vectordb` first."
+            )
 
         embedding_model = EmbeddingModel().get()
 
